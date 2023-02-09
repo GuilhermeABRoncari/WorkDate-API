@@ -1,4 +1,4 @@
-package com.br.workdate.apiworkdate.clientes;
+package com.br.workdate.apiworkdate.domain.clientes;
 
 public record newClienteData(Long id, String nome, String endereco, String fone) {
     public newClienteData(Cliente cliente){

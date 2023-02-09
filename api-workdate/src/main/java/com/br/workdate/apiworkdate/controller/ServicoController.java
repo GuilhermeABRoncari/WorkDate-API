@@ -1,6 +1,6 @@
 package com.br.workdate.apiworkdate.controller;
 
-import com.br.workdate.apiworkdate.servicos.*;
+import com.br.workdate.apiworkdate.domain.servicos.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

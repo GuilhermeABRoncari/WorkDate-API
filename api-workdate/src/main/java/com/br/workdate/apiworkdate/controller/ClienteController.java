@@ -1,6 +1,6 @@
 package com.br.workdate.apiworkdate.controller;
 
-import com.br.workdate.apiworkdate.clientes.*;
+import com.br.workdate.apiworkdate.domain.clientes.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +10,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/clientes")

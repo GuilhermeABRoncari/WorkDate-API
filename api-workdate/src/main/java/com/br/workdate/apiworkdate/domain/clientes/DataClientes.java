@@ -1,4 +1,4 @@
-package com.br.workdate.apiworkdate.clientes;
+package com.br.workdate.apiworkdate.domain.clientes;
 
 import jakarta.validation.constraints.NotBlank;
 

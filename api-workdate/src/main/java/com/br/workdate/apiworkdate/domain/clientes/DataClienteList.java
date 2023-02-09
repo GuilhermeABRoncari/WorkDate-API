@@ -1,4 +1,4 @@
-package com.br.workdate.apiworkdate.clientes;
+package com.br.workdate.apiworkdate.domain.clientes;
 
 public record DataClienteList(Long id, String nome, String endereco, String fone) {
     public DataClienteList(Cliente cliente){

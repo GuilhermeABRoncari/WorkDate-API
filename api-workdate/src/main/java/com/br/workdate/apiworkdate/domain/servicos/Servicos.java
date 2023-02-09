@@ -1,6 +1,5 @@
-package com.br.workdate.apiworkdate.servicos;
+package com.br.workdate.apiworkdate.domain.servicos;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

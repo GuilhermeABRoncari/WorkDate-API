@@ -1,4 +1,4 @@
-package com.br.workdate.apiworkdate.servicos;
+package com.br.workdate.apiworkdate.domain.servicos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
