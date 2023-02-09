@@ -12,4 +12,7 @@ public record ServicoData(
         @NotNull
         @JsonFormat(shape = JsonFormat.Shape.STRING)
         BigDecimal valor) {
+        public ServicoData(Servicos servico){
+                this(servico.getDescricao(), servico.getValor());
+        }
 }

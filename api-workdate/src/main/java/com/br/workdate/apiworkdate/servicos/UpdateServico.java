@@ -9,4 +9,7 @@ public record UpdateServico(
         Long id,
         @NotNull
         BigDecimal valor) {
+        public UpdateServico(Servicos servico){
+                this(servico.getId(), servico.getValor());
+        }
 }

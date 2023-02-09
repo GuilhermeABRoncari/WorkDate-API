@@ -8,4 +8,7 @@ public record DataClientes(
         String endereco,
         @NotBlank
         String fone) {
+        public DataClientes(Cliente cliente){
+                this(cliente.getNome(), cliente.getEndereco(), cliente.getFone());
+        }
 }
