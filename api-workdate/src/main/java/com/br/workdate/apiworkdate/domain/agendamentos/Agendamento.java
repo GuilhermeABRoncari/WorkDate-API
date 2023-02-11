@@ -22,8 +22,10 @@ public class Agendamento {
     private Long id;
     private Timestamp horario;
     @OneToOne
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
     @OneToOne
+    @JoinColumn(name = "servico_id")
     private Servicos servico;
 
     public Agendamento(AgendamentoData data) {

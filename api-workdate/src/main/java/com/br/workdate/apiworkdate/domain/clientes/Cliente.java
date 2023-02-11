@@ -1,5 +1,6 @@
 package com.br.workdate.apiworkdate.domain.clientes;
 
+import com.br.workdate.apiworkdate.domain.agendamentos.Agendamento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cliente_id")
     private Long id;
     private String nome;
     private String endereco;
