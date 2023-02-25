@@ -1,14 +1,15 @@
-package com.br.workdate.apiworkdate.domain.clientes;
+package com.br.workdate.apiworkdate.rest.dto;
 
+import com.br.workdate.apiworkdate.domain.entity.Cliente;
 import jakarta.validation.constraints.NotBlank;
 
-public record DataClientes(
+public record ClienteDTO(
         @NotBlank
         String nome,
         String endereco,
         @NotBlank
         String fone) {
-        public DataClientes(Cliente cliente){
+        public ClienteDTO(Cliente cliente){
                 this(cliente.getNome(), cliente.getEndereco(), cliente.getFone());
         }
 }

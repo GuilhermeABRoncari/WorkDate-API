@@ -1,8 +1,8 @@
-package com.br.workdate.apiworkdate.domain.agendamentos;
+package com.br.workdate.apiworkdate.domain.entity;
 
-import com.br.workdate.apiworkdate.domain.clientes.Cliente;
-import com.br.workdate.apiworkdate.domain.servicos.Servicos;
+import com.br.workdate.apiworkdate.rest.dto.AgendamentoDTO;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,9 +26,9 @@ public class Agendamento {
     private Cliente cliente;
     @OneToOne
     @JoinColumn(name = "servico_id")
-    private Servicos servico;
+    private Servico servico;
 
-    public Agendamento(AgendamentoData data) {
+    public Agendamento(@Valid AgendamentoDTO data) {
         this.cliente = data.cliente();
         this.servico = data.servico();
         this.horario = data.horario();

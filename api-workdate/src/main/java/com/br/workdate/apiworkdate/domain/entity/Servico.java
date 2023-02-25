@@ -1,6 +1,7 @@
-package com.br.workdate.apiworkdate.domain.servicos;
+package com.br.workdate.apiworkdate.domain.entity;
 
-import com.br.workdate.apiworkdate.domain.agendamentos.Agendamento;
+import com.br.workdate.apiworkdate.rest.dto.ServicoDTO;
+import com.br.workdate.apiworkdate.rest.dto.UpdateServicoDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -15,7 +16,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Servicos {
+public class Servico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "servico_id")
@@ -23,12 +24,12 @@ public class Servicos {
     private String descricao;
     private BigDecimal valor;
 
-    public Servicos(ServicoData data) {
+    public Servico(ServicoDTO data) {
         this.descricao = data.descricao();
         this.valor = data.valor();
     }
 
-    public void att(UpdateServico updateServico) {
-        if (updateServico.valor() != null) this.valor = updateServico.valor();
+    public void att(UpdateServicoDTO updateServicoDTO) {
+        if (updateServicoDTO.valor() != null) this.valor = updateServicoDTO.valor();
     }
 }

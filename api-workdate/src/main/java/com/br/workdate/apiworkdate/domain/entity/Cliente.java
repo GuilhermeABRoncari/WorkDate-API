@@ -1,6 +1,7 @@
-package com.br.workdate.apiworkdate.domain.clientes;
+package com.br.workdate.apiworkdate.domain.entity;
 
-import com.br.workdate.apiworkdate.domain.agendamentos.Agendamento;
+import com.br.workdate.apiworkdate.rest.dto.ClienteDTO;
+import com.br.workdate.apiworkdate.domain.clientes.UpdateClientes;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -22,7 +23,7 @@ public class Cliente {
     private String endereco;
     private String fone;
 
-    public Cliente(DataClientes data) {
+    public Cliente(ClienteDTO data) {
         this.nome = data.nome();
         this.endereco = data.endereco();
         this.fone = data.fone();

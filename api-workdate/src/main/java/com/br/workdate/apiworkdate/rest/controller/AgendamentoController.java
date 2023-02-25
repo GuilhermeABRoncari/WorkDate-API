@@ -1,9 +1,9 @@
-package com.br.workdate.apiworkdate.controller;
+package com.br.workdate.apiworkdate.rest.controller;
 
-import com.br.workdate.apiworkdate.domain.agendamentos.Agendamento;
-import com.br.workdate.apiworkdate.domain.agendamentos.AgendamentoData;
-import com.br.workdate.apiworkdate.domain.agendamentos.AgendamentoRepository;
 import com.br.workdate.apiworkdate.domain.agendamentos.ListAgendamentoData;
+import com.br.workdate.apiworkdate.domain.entity.Agendamento;
+import com.br.workdate.apiworkdate.domain.repository.AgendamentoRepository;
+import com.br.workdate.apiworkdate.rest.dto.AgendamentoDTO;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class AgendamentoController {
     private AgendamentoRepository repository;
     @PostMapping
     @Transactional
-    public ResponseEntity addAgendamento(@RequestBody @Valid AgendamentoData data, UriComponentsBuilder uriBuilder){
+    public ResponseEntity addAgendamento(@RequestBody @Valid AgendamentoDTO data, UriComponentsBuilder uriBuilder){
         var agendamento = new Agendamento(data);
         repository.save(agendamento);
         var uri = uriBuilder.path("/agendamento/{id}").buildAndExpand(agendamento).toUri();

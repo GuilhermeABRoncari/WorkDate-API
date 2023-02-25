@@ -1,5 +1,9 @@
-package com.br.workdate.apiworkdate.controller;
+package com.br.workdate.apiworkdate.rest.controller;
 
+import com.br.workdate.apiworkdate.rest.dto.ServicoDTO;
+import com.br.workdate.apiworkdate.rest.dto.UpdateServicoDTO;
+import com.br.workdate.apiworkdate.domain.entity.Servico;
+import com.br.workdate.apiworkdate.domain.repository.ServicoRepository;
 import com.br.workdate.apiworkdate.domain.servicos.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -19,8 +23,8 @@ public class ServicoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity addServico(@RequestBody @Valid ServicoData data, UriComponentsBuilder uriBuilder) {
-        var servico = new Servicos(data);
+    public ResponseEntity addServico(@RequestBody @Valid ServicoDTO data, UriComponentsBuilder uriBuilder) {
+        var servico = new Servico(data);
         repository.save(servico);
         var uri = uriBuilder.path("/servicos/{id}").buildAndExpand(servico.getId()).toUri();
         return ResponseEntity.created(uri).body(data);
@@ -34,10 +38,10 @@ public class ServicoController {
 
     @PutMapping
     @Transactional
-    public ResponseEntity attServico(@RequestBody @Valid UpdateServico updateServico) {
-        var servico = repository.getReferenceById(updateServico.id());
-        servico.att(updateServico);
-        return ResponseEntity.ok(new UpdateServico(servico));
+    public ResponseEntity attServico(@RequestBody @Valid UpdateServicoDTO updateServicoDTO) {
+        var servico = repository.getReferenceById(updateServicoDTO.id());
+        servico.att(updateServicoDTO);
+        return ResponseEntity.ok(new UpdateServicoDTO(servico));
     }
 
     @DeleteMapping("/{id}")
@@ -49,6 +53,6 @@ public class ServicoController {
     @GetMapping("/{id}")
     public ResponseEntity findServico(@PathVariable Long id){
         var servico = repository.getReferenceById(id);
-        return ResponseEntity.ok(new ServicoData(servico));
+        return ResponseEntity.ok(new ServicoDTO(servico));
     }
 }
