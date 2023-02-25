@@ -28,9 +28,4 @@ public class Agendamento {
     @JoinColumn(name = "servico_id")
     private Servico servico;
 
-    public Agendamento(@Valid AgendamentoDTO data) {
-        this.cliente = data.cliente();
-        this.servico = data.servico();
-        this.horario = data.horario();
-    }
 }

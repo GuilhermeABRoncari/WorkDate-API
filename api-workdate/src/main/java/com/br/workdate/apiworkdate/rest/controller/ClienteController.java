@@ -1,6 +1,6 @@
 package com.br.workdate.apiworkdate.rest.controller;
 
-import com.br.workdate.apiworkdate.domain.clientes.DataClienteList;
+import com.br.workdate.apiworkdate.rest.dto.ListClienteDTO;
 import com.br.workdate.apiworkdate.rest.dto.UpdateClientesDTO;
 import com.br.workdate.apiworkdate.domain.entity.Cliente;
 import com.br.workdate.apiworkdate.domain.repository.ClienteRepository;
@@ -31,8 +31,8 @@ public class ClienteController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Page<DataClienteList> listCliente(@PageableDefault(sort = {"nome"}) Pageable pageable) {
-        var page = clienteRepository.findAll(pageable).map(DataClienteList::new);
+    public Page<ListClienteDTO> listCliente(@PageableDefault(sort = {"nome"}) Pageable pageable) {
+        var page = clienteRepository.findAll(pageable).map(ListClienteDTO::new);
         return page;
     }
 
