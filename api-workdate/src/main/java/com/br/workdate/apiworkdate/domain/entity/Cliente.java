@@ -1,12 +1,13 @@
 package com.br.workdate.apiworkdate.domain.entity;
 
+import com.br.workdate.apiworkdate.rest.dto.UpdateClientesDTO;
 import com.br.workdate.apiworkdate.rest.dto.ClienteDTO;
-import com.br.workdate.apiworkdate.domain.clientes.UpdateClientes;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Bean;
 
 @Entity(name = "Cliente")
 @Table(name = "clientes")
@@ -29,7 +30,8 @@ public class Cliente {
         this.fone = data.fone();
     }
 
-    public void att(UpdateClientes data) {
+    @Bean
+    public void att(UpdateClientesDTO data) {
         if (data.nome() != null) this.nome = data.nome();
         if (data.endereco() != null) this.endereco = data.endereco();
         if (data.fone() != null) this.fone = data.fone();

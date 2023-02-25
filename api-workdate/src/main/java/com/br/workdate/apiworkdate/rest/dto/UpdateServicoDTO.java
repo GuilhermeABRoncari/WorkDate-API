@@ -7,10 +7,9 @@ import java.math.BigDecimal;
 
 public record UpdateServicoDTO(
         @NotNull
-        Long id,
-        @NotNull
-        BigDecimal valor) {
-        public UpdateServicoDTO(Servico servico){
-                this(servico.getId(), servico.getValor());
-        }
+        BigDecimal valor
+) {
+    public UpdateServicoDTO(Servico servico){
+        this(servico.getValor());
+    }
 }

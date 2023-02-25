@@ -3,16 +3,14 @@ package com.br.workdate.apiworkdate.domain.entity;
 import com.br.workdate.apiworkdate.rest.dto.ServicoDTO;
 import com.br.workdate.apiworkdate.rest.dto.UpdateServicoDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.context.annotation.Bean;
 
 import java.math.BigDecimal;
 
 @Entity(name = "Servico")
 @Table(name = "servicos")
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -29,6 +27,7 @@ public class Servico {
         this.valor = data.valor();
     }
 
+    @Bean
     public void att(UpdateServicoDTO updateServicoDTO) {
         if (updateServicoDTO.valor() != null) this.valor = updateServicoDTO.valor();
     }

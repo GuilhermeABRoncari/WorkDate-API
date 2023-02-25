@@ -1,7 +1,7 @@
 package com.br.workdate.apiworkdate.rest.controller;
 
 import com.br.workdate.apiworkdate.domain.clientes.DataClienteList;
-import com.br.workdate.apiworkdate.domain.clientes.UpdateClientes;
+import com.br.workdate.apiworkdate.rest.dto.UpdateClientesDTO;
 import com.br.workdate.apiworkdate.domain.entity.Cliente;
 import com.br.workdate.apiworkdate.domain.repository.ClienteRepository;
 import com.br.workdate.apiworkdate.rest.dto.ClienteDTO;
@@ -12,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -25,7 +24,7 @@ public class ClienteController {
     @PostMapping
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente salvarCliente(@RequestBody @Valid ClienteDTO clienteDTO) {
+    public Cliente saveCliente(@RequestBody @Valid ClienteDTO clienteDTO) {
         var cliente = new Cliente(clienteDTO);
         return clienteRepository.save(cliente);
     }
@@ -37,13 +36,16 @@ public class ClienteController {
         return page;
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Transactional
     @ResponseStatus(HttpStatus.OK)
-    public Cliente attCliente(@RequestBody @Valid UpdateClientes data) {
-        var cliente = clienteRepository.getReferenceById(data.id());
-        cliente.att(data);
-        return cliente;
+    public void attCliente(@PathVariable Long id, @RequestBody @Valid UpdateClientesDTO updateClientesDTO) {
+        clienteRepository.findById(id).map(clienteAtual -> {
+            var cliente = clienteRepository.getReferenceById(id);
+            cliente.att(updateClientesDTO);
+            clienteRepository.save(cliente);
+            return cliente;
+        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado."));
     }
 
     @DeleteMapping("/{id}")

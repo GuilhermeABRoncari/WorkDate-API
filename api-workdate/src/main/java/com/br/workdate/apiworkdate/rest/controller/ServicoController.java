@@ -11,48 +11,59 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/servicos")
 public class ServicoController {
     @Autowired
-    private ServicoRepository repository;
+    private ServicoRepository servicoRepository;
 
     @PostMapping
     @Transactional
-    public ResponseEntity addServico(@RequestBody @Valid ServicoDTO data, UriComponentsBuilder uriBuilder) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public Servico saveServico(@RequestBody @Valid ServicoDTO data) {
         var servico = new Servico(data);
-        repository.save(servico);
-        var uri = uriBuilder.path("/servicos/{id}").buildAndExpand(servico.getId()).toUri();
-        return ResponseEntity.created(uri).body(data);
+        servicoRepository.save(servico);
+        return servico;
     }
 
     @GetMapping
-    public ResponseEntity<Page<DataServicoList>> listServicos(@PageableDefault(sort = "descricao") Pageable pageable) {
-        var page = repository.findAll(pageable).map(DataServicoList::new);
-        return ResponseEntity.ok(page);
+    @ResponseStatus(HttpStatus.OK)
+    public Page<DataServicoList> listServicos(@PageableDefault(sort = "descricao") Pageable pageable) {
+        var page = servicoRepository.findAll(pageable).map(DataServicoList::new);
+        return page;
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity attServico(@RequestBody @Valid UpdateServicoDTO updateServicoDTO) {
-        var servico = repository.getReferenceById(updateServicoDTO.id());
-        servico.att(updateServicoDTO);
-        return ResponseEntity.ok(new UpdateServicoDTO(servico));
+    @ResponseStatus(HttpStatus.OK)
+    public void attServico(@PathVariable Long id, @RequestBody @Valid UpdateServicoDTO updateServicoDTO) {
+        servicoRepository.findById(id).map(servicoAtual -> {
+            var servico = servicoRepository.getReferenceById(id);
+            servico.att(updateServicoDTO);
+            servicoRepository.save(servico);
+            return servico;
+        }).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Servico não encontrado"));
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity deleteServico(@PathVariable Long id) {
-        repository.deleteById(id);
-        return ResponseEntity.noContent().build();
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteServico(@PathVariable Long id) {
+        servicoRepository.findById(id).map(servico -> {
+            servicoRepository.delete(servico);
+            return servico;
+        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Serviço não encontrado."));
     }
     @GetMapping("/{id}")
-    public ResponseEntity findServico(@PathVariable Long id){
-        var servico = repository.getReferenceById(id);
-        return ResponseEntity.ok(new ServicoDTO(servico));
+    @ResponseStatus(HttpStatus.OK)
+    public Servico findServico(@PathVariable Long id){
+        return servicoRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Servico não encontrado."));
     }
 }
