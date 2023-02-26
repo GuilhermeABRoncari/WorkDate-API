@@ -8,10 +8,10 @@ import java.sql.Timestamp;
 
 public record ListAgendamentoDTO(
         Long id,
-        Long cliente_id,
-        Long servico_id,
+        Cliente cliente,
+        Servico servico,
         Timestamp horario) {
     public ListAgendamentoDTO(Agendamento agendamento){
-        this(agendamento.getId(), agendamento.getCliente().getId(), agendamento.getServico().getId(), agendamento.getHorario());
+        this(agendamento.getId(), agendamento.getCliente(), agendamento.getServico(), agendamento.getHorario());
     }
 }

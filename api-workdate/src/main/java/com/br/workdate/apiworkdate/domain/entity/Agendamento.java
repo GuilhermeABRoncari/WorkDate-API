@@ -1,24 +1,22 @@
 package com.br.workdate.apiworkdate.domain.entity;
 
-import com.br.workdate.apiworkdate.rest.dto.AgendamentoDTO;
+
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
 @Entity(name = "Agendamento")
 @Table(name = "agendamentos")
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
 public class Agendamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "agendamento_id")
     private Long id;
     private Timestamp horario;
     @OneToOne

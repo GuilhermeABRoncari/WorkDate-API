@@ -1,10 +1,10 @@
 package com.br.workdate.apiworkdate.rest.controller;
 
+import com.br.workdate.apiworkdate.rest.dto.ListServicoDTO;
 import com.br.workdate.apiworkdate.rest.dto.ServicoDTO;
 import com.br.workdate.apiworkdate.rest.dto.UpdateServicoDTO;
 import com.br.workdate.apiworkdate.domain.entity.Servico;
 import com.br.workdate.apiworkdate.domain.repository.ServicoRepository;
-import com.br.workdate.apiworkdate.domain.servicos.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/servicos")
@@ -34,8 +32,8 @@ public class ServicoController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Page<DataServicoList> listServicos(@PageableDefault(sort = "descricao") Pageable pageable) {
-        var page = servicoRepository.findAll(pageable).map(DataServicoList::new);
+    public Page<ListServicoDTO> listServicos(@PageableDefault(sort = "descricao") Pageable pageable) {
+        var page = servicoRepository.findAll(pageable).map(ListServicoDTO::new);
         return page;
     }
 
