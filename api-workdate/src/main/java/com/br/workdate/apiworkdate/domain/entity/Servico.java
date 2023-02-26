@@ -21,6 +21,7 @@ public class Servico {
     private Long id;
     private String descricao;
     private BigDecimal valor;
+    private boolean agendado = false;
 
     public Servico(ServicoDTO data) {
         this.descricao = data.descricao();

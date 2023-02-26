@@ -1,11 +1,11 @@
 package com.br.workdate.apiworkdate.domain.entity;
 
-import com.br.workdate.apiworkdate.rest.dto.UpdateClientesDTO;
 import com.br.workdate.apiworkdate.rest.dto.ClienteDTO;
+import com.br.workdate.apiworkdate.rest.dto.UpdateClientesDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Bean;
 
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 @Table(name = "clientes")
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
+@Data
 @EqualsAndHashCode(of = "id")
 public class Cliente {
     @Id
@@ -23,6 +23,7 @@ public class Cliente {
     private String nome;
     private String endereco;
     private String fone;
+    private boolean agendado = false;
 
     public Cliente(ClienteDTO data) {
         this.nome = data.nome();

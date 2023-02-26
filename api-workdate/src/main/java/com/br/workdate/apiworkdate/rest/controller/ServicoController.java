@@ -1,5 +1,6 @@
 package com.br.workdate.apiworkdate.rest.controller;
 
+import com.br.workdate.apiworkdate.infra.AgendamentoException;
 import com.br.workdate.apiworkdate.rest.dto.ListServicoDTO;
 import com.br.workdate.apiworkdate.rest.dto.ServicoDTO;
 import com.br.workdate.apiworkdate.rest.dto.UpdateServicoDTO;
@@ -54,6 +55,9 @@ public class ServicoController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteServico(@PathVariable Long id) {
         servicoRepository.findById(id).map(servico -> {
+            if(servico.isAgendado()){
+                throw new AgendamentoException("Serviço não pode ser excluído pois está em uso em um agendamento.");
+            }
             servicoRepository.delete(servico);
             return servico;
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Serviço não encontrado."));

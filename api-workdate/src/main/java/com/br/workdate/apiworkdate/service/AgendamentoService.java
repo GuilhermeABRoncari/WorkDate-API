@@ -20,6 +20,8 @@ public class AgendamentoService {
     public Agendamento save(AgendamentoDTO agendamentoDTO) {
         var cliente = clienteRepository.getReferenceById(agendamentoDTO.cliente_id());
         var servico = servicoRepository.getReferenceById(agendamentoDTO.servico_id());
+        cliente.setAgendado(true);
+        servico.setAgendado(true);
         Agendamento agendamento = new Agendamento(null, agendamentoDTO.horario(), cliente, servico);
         agendamentoRepository.save(agendamento);
         return agendamento;

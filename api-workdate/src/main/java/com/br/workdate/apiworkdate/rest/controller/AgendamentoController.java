@@ -48,6 +48,8 @@ public class AgendamentoController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAgendamento(@PathVariable Long id) {
         agendamentoRepository.findById(id).map(agendamento -> {
+            agendamento.getCliente().setAgendado(false);
+            agendamento.getServico().setAgendado(false);
             agendamentoRepository.delete(agendamento);
             return agendamento;
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Agendamento não encontrado."));

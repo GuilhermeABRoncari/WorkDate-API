@@ -1,10 +1,11 @@
 package com.br.workdate.apiworkdate.rest.controller;
 
-import com.br.workdate.apiworkdate.rest.dto.ListClienteDTO;
-import com.br.workdate.apiworkdate.rest.dto.UpdateClientesDTO;
 import com.br.workdate.apiworkdate.domain.entity.Cliente;
 import com.br.workdate.apiworkdate.domain.repository.ClienteRepository;
+import com.br.workdate.apiworkdate.infra.AgendamentoException;
 import com.br.workdate.apiworkdate.rest.dto.ClienteDTO;
+import com.br.workdate.apiworkdate.rest.dto.ListClienteDTO;
+import com.br.workdate.apiworkdate.rest.dto.UpdateClientesDTO;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,9 @@ public class ClienteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCliente(@PathVariable Long id) {
         clienteRepository.findById(id).map(cliente -> {
+            if (cliente.isAgendado()) {
+                throw new AgendamentoException("Cliente não pode ser excluído pois está em um agendamento.");
+            }
             clienteRepository.delete(cliente);
             return cliente;
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado."));
