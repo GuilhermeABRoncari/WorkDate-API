@@ -14,12 +14,13 @@ import lombok.NoArgsConstructor;
 public class LancamentoFinanceiro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "lancamentos_financeiros_id")
     private Long id;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "agendamento_id")
     private Agendamento agendamento;
     @Enumerated(EnumType.STRING)
+    @Column(name = "situation")
     private Situation situation;
 
     public void situationChange(Situation situation){
