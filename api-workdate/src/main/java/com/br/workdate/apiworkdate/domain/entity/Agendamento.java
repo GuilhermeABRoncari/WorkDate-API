@@ -25,5 +25,14 @@ public class Agendamento {
     @OneToOne
     @JoinColumn(name = "servico_id")
     private Servico servico;
+    private String observacoes;
+    private Boolean concluido;
+    private Boolean cancelado;
 
+    public void concluir(){
+        this.concluido = true;
+    }
+    public void cancelar(){
+        this.cancelado = true;
+    }
 }
