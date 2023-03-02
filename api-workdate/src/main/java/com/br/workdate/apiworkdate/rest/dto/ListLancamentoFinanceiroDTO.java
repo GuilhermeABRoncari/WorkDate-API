@@ -1,6 +1,6 @@
 package com.br.workdate.apiworkdate.rest.dto;
 
-import com.br.workdate.apiworkdate.domain.entity.Agendamento;
+
 import com.br.workdate.apiworkdate.domain.entity.LancamentoFinanceiro;
 
 import java.math.BigDecimal;
@@ -17,6 +17,7 @@ public record ListLancamentoFinanceiroDTO(
                 lancamentoFinanceiro.getAgendamento().getCliente().getNome(),
                 lancamentoFinanceiro.getAgendamento().getServico().getDescricao(),
                 lancamentoFinanceiro.getAgendamento().getServico().getValor(),
-                lancamentoFinanceiro.getAgendamento().getHorario());
+                lancamentoFinanceiro.getAgendamento().getHorario()
+                );
     }
 }

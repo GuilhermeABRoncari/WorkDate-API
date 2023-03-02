@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/agendamento")
 public class AgendamentoController {
@@ -47,11 +49,16 @@ public class AgendamentoController {
     @Transactional
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAgendamento(@PathVariable Long id) {
-        agendamentoRepository.findById(id).map(agendamento -> {
-            agendamento.getCliente().setAgendado(false);
-            agendamento.getServico().setAgendado(false);
-            agendamentoRepository.delete(agendamento);
-            return agendamento;
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Agendamento não encontrado."));
+        agendamentoService.delete(id);
+    }
+    @PutMapping("/{id}")
+    @Transactional
+    public void agendamentoConcluido(@PathVariable Long id){
+         agendamentoService.concluir(id);
+    }
+    @PatchMapping("/{id}")
+    @Transactional
+    public void agendamentoCancelado(@PathVariable Long id){
+        agendamentoService.cancelar(id);
     }
 }

@@ -6,8 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table
+@Entity(name = "lancamento_financeiro")
+@Table(name = "lancamentos_financeiros")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
