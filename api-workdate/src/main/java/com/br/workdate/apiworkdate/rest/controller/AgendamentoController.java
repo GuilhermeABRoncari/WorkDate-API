@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -51,14 +52,24 @@ public class AgendamentoController {
     public void deleteAgendamento(@PathVariable Long id) {
         agendamentoService.delete(id);
     }
+
     @PutMapping("/{id}")
     @Transactional
-    public void agendamentoConcluido(@PathVariable Long id){
-         agendamentoService.concluir(id);
+    public void agendamentoConcluido(@PathVariable Long id) {
+        agendamentoService.concluir(id);
     }
+
     @PatchMapping("/{id}")
     @Transactional
-    public void agendamentoCancelado(@PathVariable Long id){
+    public void agendamentoCancelado(@PathVariable Long id) {
         agendamentoService.cancelar(id);
+    }
+    @GetMapping("/concluido")
+    public List<Agendamento> concluidos(){
+        return agendamentoRepository.findAllByConcluidoTrue();
+    }
+    @GetMapping("/cancelado")
+    public List<Agendamento> cancelados(){
+        return agendamentoRepository.findAllByCanceladoTrue();
     }
 }
