@@ -4,6 +4,8 @@ import com.br.workdate.apiworkdate.domain.entity.LancamentoFinanceiro;
 import com.br.workdate.apiworkdate.domain.repository.LancamentoFinanceiroRepository;
 import com.br.workdate.apiworkdate.infra.Situation;
 import com.br.workdate.apiworkdate.rest.dto.ListLancamentoFinanceiroDTO;
+import com.br.workdate.apiworkdate.rest.dto.ResumoDTO;
+import com.br.workdate.apiworkdate.service.LancamentoFinanceiroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +22,8 @@ import java.util.stream.Collectors;
 public class LancamentoFinanceiroController {
     @Autowired
     private LancamentoFinanceiroRepository lancamentoFinanceiroRepository;
+    @Autowired
+    private LancamentoFinanceiroService lancamentoFinanceiroService;
 
     @GetMapping
     public Page<ListLancamentoFinanceiroDTO> findAllLancamentos(Pageable pageable) {
@@ -31,5 +35,9 @@ public class LancamentoFinanceiroController {
     public List<ListLancamentoFinanceiroDTO> findBySituation(@PathVariable Situation situation) {
         List<LancamentoFinanceiro> lista = lancamentoFinanceiroRepository.findAllBySituation(situation);
         return lista.stream().map(ListLancamentoFinanceiroDTO::new).collect(Collectors.toList());
+    }
+    @GetMapping("/resumo")
+    public ResumoDTO resumo(){
+        return lancamentoFinanceiroService.resumir();
     }
 }

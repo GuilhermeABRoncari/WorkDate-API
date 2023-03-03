@@ -52,7 +52,7 @@ public class AgendamentoService {
         if(!agendamento.getConcluido()){
             agendamento.concluir();
             LancamentoFinanceiro lf = lancamentoFinanceiroRepository.findByAgendamentoId(agendamento.getId());
-            lf.situationChange(Situation.PAID);
+            if(lf.getSituation() == Situation.OPEN) lf.situationChange(Situation.PAID);
         }else if(agendamento.getConcluido()){
             agendamento.setConcluido(false);
         }
