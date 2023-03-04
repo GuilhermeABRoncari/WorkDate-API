@@ -29,7 +29,7 @@ public class Servico {
     }
 
     @Bean
-    public void att(UpdateServicoDTO updateServicoDTO) {
+    public void update(UpdateServicoDTO updateServicoDTO) {
         if (updateServicoDTO.valor() != null) this.valor = updateServicoDTO.valor();
     }
 }

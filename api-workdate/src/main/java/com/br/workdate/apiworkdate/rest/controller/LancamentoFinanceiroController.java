@@ -2,8 +2,8 @@ package com.br.workdate.apiworkdate.rest.controller;
 
 import com.br.workdate.apiworkdate.domain.entity.LancamentoFinanceiro;
 import com.br.workdate.apiworkdate.domain.repository.LancamentoFinanceiroRepository;
-import com.br.workdate.apiworkdate.infra.Situation;
-import com.br.workdate.apiworkdate.rest.dto.ListLancamentoFinanceiroDTO;
+import com.br.workdate.apiworkdate.domain.Situation;
+import com.br.workdate.apiworkdate.rest.dto.LancamentoFinanceiroResponse;
 import com.br.workdate.apiworkdate.rest.dto.ResumoDTO;
 import com.br.workdate.apiworkdate.service.LancamentoFinanceiroService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +26,14 @@ public class LancamentoFinanceiroController {
     private LancamentoFinanceiroService lancamentoFinanceiroService;
 
     @GetMapping
-    public Page<ListLancamentoFinanceiroDTO> findAllLancamentos(Pageable pageable) {
-        var page = lancamentoFinanceiroRepository.findAll(pageable).map(ListLancamentoFinanceiroDTO::new);
-        return page;
+    public Page<LancamentoFinanceiroResponse> findAllLancamentos(Pageable pageable) {
+        return lancamentoFinanceiroRepository.findAll(pageable).map(LancamentoFinanceiroResponse::new);
     }
 
     @GetMapping("/{situation}")
-    public List<ListLancamentoFinanceiroDTO> findBySituation(@PathVariable Situation situation) {
+    public List<LancamentoFinanceiroResponse> findBySituation(@PathVariable Situation situation) {
         List<LancamentoFinanceiro> lista = lancamentoFinanceiroRepository.findAllBySituation(situation);
-        return lista.stream().map(ListLancamentoFinanceiroDTO::new).collect(Collectors.toList());
+        return lista.stream().map(LancamentoFinanceiroResponse::new).collect(Collectors.toList());
     }
     @GetMapping("/resumo")
     public ResumoDTO resumo(){

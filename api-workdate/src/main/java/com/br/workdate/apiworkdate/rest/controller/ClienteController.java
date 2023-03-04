@@ -4,7 +4,7 @@ import com.br.workdate.apiworkdate.domain.entity.Cliente;
 import com.br.workdate.apiworkdate.domain.repository.ClienteRepository;
 import com.br.workdate.apiworkdate.infra.AgendamentoException;
 import com.br.workdate.apiworkdate.rest.dto.ClienteDTO;
-import com.br.workdate.apiworkdate.rest.dto.ListClienteDTO;
+import com.br.workdate.apiworkdate.rest.dto.ClienteResponse;
 import com.br.workdate.apiworkdate.rest.dto.UpdateClientesDTO;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -26,21 +26,19 @@ public class ClienteController {
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente saveCliente(@RequestBody @Valid ClienteDTO clienteDTO) {
-        var cliente = new Cliente(clienteDTO);
-        return clienteRepository.save(cliente);
+        return clienteRepository.save(new Cliente(clienteDTO));
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Page<ListClienteDTO> listCliente(@PageableDefault(sort = {"nome"}) Pageable pageable) {
-        var page = clienteRepository.findAll(pageable).map(ListClienteDTO::new);
-        return page;
+    public Page<ClienteResponse> listCliente(@PageableDefault(sort = {"nome"}) Pageable pageable) {
+        return clienteRepository.findAll(pageable).map(ClienteResponse::new);
     }
 
     @PutMapping("/{id}")
     @Transactional
     @ResponseStatus(HttpStatus.OK)
-    public void attCliente(@PathVariable Long id, @RequestBody @Valid UpdateClientesDTO updateClientesDTO) {
+    public void updateCliente(@PathVariable Long id, @RequestBody @Valid UpdateClientesDTO updateClientesDTO) {
         clienteRepository.findById(id).map(clienteAtual -> {
             var cliente = clienteRepository.getReferenceById(id);
             cliente.att(updateClientesDTO);
@@ -69,3 +67,4 @@ public class ClienteController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado."));
     }
 }
+//fazer as mensagens fixas

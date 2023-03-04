@@ -5,7 +5,7 @@ import com.br.workdate.apiworkdate.domain.repository.AgendamentoRepository;
 import com.br.workdate.apiworkdate.domain.repository.ClienteRepository;
 import com.br.workdate.apiworkdate.domain.repository.LancamentoFinanceiroRepository;
 import com.br.workdate.apiworkdate.domain.repository.ServicoRepository;
-import com.br.workdate.apiworkdate.infra.Situation;
+import com.br.workdate.apiworkdate.domain.Situation;
 import com.br.workdate.apiworkdate.rest.dto.ResumoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,10 +24,6 @@ public class LancamentoFinanceiroService {
     private ServicoRepository servicoRepository;
     @Autowired
     private LancamentoFinanceiroRepository lancamentoFinanceiroRepository;
-
-    private static void accept(LancamentoFinanceiro lancamentoFinanceiro) {
-        new BigDecimal(String.valueOf(lancamentoFinanceiro.getAgendamento().getServico().getValor()));
-    }
 
     public ResumoDTO resumir() {
         List<LancamentoFinanceiro> lfOpen = lancamentoFinanceiroRepository.findAllBySituation(Situation.OPEN);

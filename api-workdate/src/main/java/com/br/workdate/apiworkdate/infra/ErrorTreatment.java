@@ -16,10 +16,10 @@ public class ErrorTreatment {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity error400(MethodArgumentNotValidException ex){
         var erro = ex.getFieldErrors();
-        return ResponseEntity.badRequest().body(erro.stream().map(errorValidation::new).toList());
+        return ResponseEntity.badRequest().body(erro.stream().map(ErrorValidation::new).toList());
     }
-    private record errorValidation(String field, String message){
-        public errorValidation(FieldError error){
+    private record ErrorValidation(String field, String message){
+        public ErrorValidation(FieldError error){
             this(error.getField(), error.getDefaultMessage());
         }
     }

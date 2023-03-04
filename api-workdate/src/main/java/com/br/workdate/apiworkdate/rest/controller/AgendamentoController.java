@@ -3,7 +3,7 @@ package com.br.workdate.apiworkdate.rest.controller;
 import com.br.workdate.apiworkdate.domain.entity.Agendamento;
 import com.br.workdate.apiworkdate.domain.repository.AgendamentoRepository;
 import com.br.workdate.apiworkdate.rest.dto.AgendamentoDTO;
-import com.br.workdate.apiworkdate.rest.dto.ListAgendamentoDTO;
+import com.br.workdate.apiworkdate.rest.dto.AgendamentoResponse;
 import com.br.workdate.apiworkdate.service.AgendamentoService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/agendamento")
@@ -34,9 +33,8 @@ public class AgendamentoController {
     }
 
     @GetMapping
-    public Page<ListAgendamentoDTO> listarAgendamento(Pageable pageable) {
-        var lista = agendamentoRepository.findAll(pageable).map(ListAgendamentoDTO::new);
-        return lista;
+    public Page<AgendamentoResponse> listarAgendamento(Pageable pageable) {
+        return agendamentoRepository.findAll(pageable).map(AgendamentoResponse::new);
     }
 
     @GetMapping("/{id}")
@@ -59,10 +57,10 @@ public class AgendamentoController {
         agendamentoService.concluir(id);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping
     @Transactional
-    public void agendamentoCancelado(@PathVariable Long id) {
-        agendamentoService.cancelar(id);
+    public void updateAgendamento(@RequestBody @Valid AgendamentoResponse agendamentoResponse) {
+        agendamentoService.update(agendamentoResponse);
     }
     @GetMapping("/concluido")
     public List<Agendamento> concluidos(){
@@ -73,3 +71,8 @@ public class AgendamentoController {
         return agendamentoRepository.findAllByCanceladoTrue();
     }
 }
+//Fazer um end point que retorna uma lista de agendamentos dentre o primeiro e ultimo dia,
+// não retorne nada que esteja cancelado ou concluido, apenas em ABERTO(OPEN)
+// eles devem estar ordenados por data e hora.
+
+//Criar o UpdateAgendamentoDTO.

@@ -1,14 +1,14 @@
 package com.br.workdate.apiworkdate.domain.entity;
 
-import com.br.workdate.apiworkdate.infra.Situation;
+import com.br.workdate.apiworkdate.domain.Situation;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity(name = "lancamento_financeiro")
 @Table(name = "lancamentos_financeiros")
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class LancamentoFinanceiro {

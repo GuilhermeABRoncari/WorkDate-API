@@ -6,12 +6,12 @@ import com.br.workdate.apiworkdate.domain.entity.Servico;
 
 import java.sql.Timestamp;
 
-public record ListAgendamentoDTO(
+public record AgendamentoResponse(
         Long id,
         Cliente cliente,
         Servico servico,
         Timestamp horario) {
-    public ListAgendamentoDTO(Agendamento agendamento){
+    public AgendamentoResponse(Agendamento agendamento){
         this(agendamento.getId(), agendamento.getCliente(), agendamento.getServico(), agendamento.getHorario());
     }
 }

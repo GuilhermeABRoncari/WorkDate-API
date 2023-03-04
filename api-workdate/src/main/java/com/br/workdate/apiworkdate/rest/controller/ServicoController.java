@@ -1,7 +1,7 @@
 package com.br.workdate.apiworkdate.rest.controller;
 
 import com.br.workdate.apiworkdate.infra.AgendamentoException;
-import com.br.workdate.apiworkdate.rest.dto.ListServicoDTO;
+import com.br.workdate.apiworkdate.rest.dto.ServicoResponse;
 import com.br.workdate.apiworkdate.rest.dto.ServicoDTO;
 import com.br.workdate.apiworkdate.rest.dto.UpdateServicoDTO;
 import com.br.workdate.apiworkdate.domain.entity.Servico;
@@ -33,18 +33,17 @@ public class ServicoController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Page<ListServicoDTO> listServicos(@PageableDefault(sort = "descricao") Pageable pageable) {
-        var page = servicoRepository.findAll(pageable).map(ListServicoDTO::new);
-        return page;
+    public Page<ServicoResponse> listServicos(@PageableDefault(sort = "descricao") Pageable pageable) {
+        return servicoRepository.findAll(pageable).map(ServicoResponse::new);
     }
 
     @PutMapping("/{id}")
     @Transactional
     @ResponseStatus(HttpStatus.OK)
-    public void attServico(@PathVariable Long id, @RequestBody @Valid UpdateServicoDTO updateServicoDTO) {
+    public void updateServico(@PathVariable Long id, @RequestBody @Valid UpdateServicoDTO updateServicoDTO) {
         servicoRepository.findById(id).map(servicoAtual -> {
             var servico = servicoRepository.getReferenceById(id);
-            servico.att(updateServicoDTO);
+            servico.update(updateServicoDTO);
             servicoRepository.save(servico);
             return servico;
         }).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Servico não encontrado"));

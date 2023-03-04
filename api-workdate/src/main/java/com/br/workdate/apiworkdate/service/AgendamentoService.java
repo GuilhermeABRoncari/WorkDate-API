@@ -6,8 +6,9 @@ import com.br.workdate.apiworkdate.domain.repository.AgendamentoRepository;
 import com.br.workdate.apiworkdate.domain.repository.ClienteRepository;
 import com.br.workdate.apiworkdate.domain.repository.LancamentoFinanceiroRepository;
 import com.br.workdate.apiworkdate.domain.repository.ServicoRepository;
-import com.br.workdate.apiworkdate.infra.Situation;
+import com.br.workdate.apiworkdate.domain.Situation;
 import com.br.workdate.apiworkdate.rest.dto.AgendamentoDTO;
+import com.br.workdate.apiworkdate.rest.dto.AgendamentoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -29,18 +30,19 @@ public class AgendamentoService {
         var servico = servicoRepository.getReferenceById(agendamentoDTO.servico_id());
         cliente.setAgendado(true);
         servico.setAgendado(true);
-        Agendamento agendamento = new Agendamento(null, agendamentoDTO.horario(), cliente, servico, agendamentoDTO.observacoes(), false, false);
+        var agendamento = new Agendamento(null, agendamentoDTO.horario(), cliente, servico, agendamentoDTO.observacoes(), false, false);
         agendamentoRepository.save(agendamento);
         lancamentoFinanceiroRepository.save(new LancamentoFinanceiro(null, agendamento, Situation.OPEN));
         return agendamento;
     }
-    public void delete(Long id){
+
+    public void delete(Long id) {
         agendamentoRepository.findById(id).map(agendamento -> {
             agendamento.getCliente().setAgendado(false);
             agendamento.getServico().setAgendado(false);
 
-            var lf = lancamentoFinanceiroRepository.findByAgendamentoId(id);
-            lancamentoFinanceiroRepository.delete(lf);
+            var lancamentoFinanceiro = lancamentoFinanceiroRepository.findByAgendamentoId(id);
+            lancamentoFinanceiroRepository.delete(lancamentoFinanceiro);
 
             agendamentoRepository.delete(agendamento);
             return agendamento;
@@ -49,21 +51,17 @@ public class AgendamentoService {
 
     public void concluir(Long id) {
         Agendamento agendamento = agendamentoRepository.getReferenceById(id);
-        if(!agendamento.getConcluido()){
+        if (!agendamento.getConcluido()) {
             agendamento.concluir();
-            LancamentoFinanceiro lf = lancamentoFinanceiroRepository.findByAgendamentoId(agendamento.getId());
-            if(lf.getSituation() == Situation.OPEN) lf.situationChange(Situation.PAID);
-        }else if(agendamento.getConcluido()){
+            LancamentoFinanceiro lancamentoFinanceiro = lancamentoFinanceiroRepository.findByAgendamentoId(agendamento.getId());
+            if (lancamentoFinanceiro.getSituation() == Situation.OPEN) lancamentoFinanceiro.situationChange(Situation.PAID);
+        } else if (agendamento.getConcluido()) {
             agendamento.setConcluido(false);
         }
     }
 
-    public void cancelar(Long id) {
-        Agendamento agendamento = agendamentoRepository.getReferenceById(id);
-        if(!agendamento.getCancelado()){
-            agendamento.cancelar();
-        }else if(agendamento.getCancelado()){
-            agendamento.setCancelado(false);
-        }
+    public void update(AgendamentoResponse agendamentoResponse) {
+        var agendamento = agendamentoRepository.getReferenceById(agendamentoResponse.id());
+        agendamentoRepository.save(agendamento);
     }
 }
