@@ -2,6 +2,7 @@ package com.br.workdate.apiworkdate.domain.entity;
 
 import com.br.workdate.apiworkdate.rest.dto.ServicoDTO;
 import com.br.workdate.apiworkdate.rest.dto.UpdateServicoDTO;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Servico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

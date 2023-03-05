@@ -41,6 +41,7 @@ public class AgendamentoService {
             var agendamento = new Agendamento(null, agendamentoDTO.horario(), cliente, servico, agendamentoDTO.observacoes(), false, false);
             agendamentoRepository.save(agendamento);
             lancamentoFinanceiroRepository.save(new LancamentoFinanceiro(null, agendamento, Situation.OPEN));
+
             return new AgendamentoResponse(agendamento);
         } else throw new AgendamentoException("Horario escolhido já está agendado.");
     }

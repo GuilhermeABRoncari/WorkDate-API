@@ -5,7 +5,6 @@ import com.br.workdate.apiworkdate.domain.repository.AgendamentoRepository;
 import com.br.workdate.apiworkdate.rest.dto.AgendamentoDTO;
 import com.br.workdate.apiworkdate.rest.response.AgendamentoResponse;
 import com.br.workdate.apiworkdate.service.AgendamentoService;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

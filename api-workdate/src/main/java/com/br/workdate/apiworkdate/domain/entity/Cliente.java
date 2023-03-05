@@ -2,7 +2,7 @@ package com.br.workdate.apiworkdate.domain.entity;
 
 import com.br.workdate.apiworkdate.rest.dto.ClienteDTO;
 import com.br.workdate.apiworkdate.rest.dto.UpdateClientesDTO;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 @AllArgsConstructor
 @Data
 @EqualsAndHashCode(of = "id")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
