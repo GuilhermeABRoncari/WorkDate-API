@@ -1,4 +1,4 @@
-package com.br.workdate.apiworkdate.rest.dto;
+package com.br.workdate.apiworkdate.rest.response;
 
 
 import com.br.workdate.apiworkdate.domain.entity.LancamentoFinanceiro;

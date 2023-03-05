@@ -4,7 +4,7 @@ import com.br.workdate.apiworkdate.domain.entity.Cliente;
 import com.br.workdate.apiworkdate.domain.repository.ClienteRepository;
 import com.br.workdate.apiworkdate.infra.AgendamentoException;
 import com.br.workdate.apiworkdate.rest.dto.ClienteDTO;
-import com.br.workdate.apiworkdate.rest.dto.ClienteResponse;
+import com.br.workdate.apiworkdate.rest.response.ClienteResponse;
 import com.br.workdate.apiworkdate.rest.dto.UpdateClientesDTO;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;

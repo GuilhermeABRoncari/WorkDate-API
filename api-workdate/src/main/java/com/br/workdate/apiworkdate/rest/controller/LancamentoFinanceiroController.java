@@ -3,7 +3,7 @@ package com.br.workdate.apiworkdate.rest.controller;
 import com.br.workdate.apiworkdate.domain.entity.LancamentoFinanceiro;
 import com.br.workdate.apiworkdate.domain.repository.LancamentoFinanceiroRepository;
 import com.br.workdate.apiworkdate.domain.Situation;
-import com.br.workdate.apiworkdate.rest.dto.LancamentoFinanceiroResponse;
+import com.br.workdate.apiworkdate.rest.response.LancamentoFinanceiroResponse;
 import com.br.workdate.apiworkdate.rest.dto.ResumoDTO;
 import com.br.workdate.apiworkdate.service.LancamentoFinanceiroService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,6 +2,7 @@ package com.br.workdate.apiworkdate.domain.entity;
 
 import com.br.workdate.apiworkdate.rest.dto.ClienteDTO;
 import com.br.workdate.apiworkdate.rest.dto.UpdateClientesDTO;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package com.br.workdate.apiworkdate.rest.controller;
 
 import com.br.workdate.apiworkdate.infra.AgendamentoException;
-import com.br.workdate.apiworkdate.rest.dto.ServicoResponse;
+import com.br.workdate.apiworkdate.rest.response.ServicoResponse;
 import com.br.workdate.apiworkdate.rest.dto.ServicoDTO;
 import com.br.workdate.apiworkdate.rest.dto.UpdateServicoDTO;
 import com.br.workdate.apiworkdate.domain.entity.Servico;

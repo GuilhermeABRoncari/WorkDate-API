@@ -19,10 +19,10 @@ public class Agendamento {
     @Column(name = "agendamento_id")
     private Long id;
     private Timestamp horario;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "servico_id")
     private Servico servico;
     private String observacoes;
@@ -34,5 +34,11 @@ public class Agendamento {
     }
     public void cancelar(){
         this.cancelado = true;
+    }
+
+    public void update(Cliente cliente, Servico servico, Timestamp horario) {
+        this.cliente = cliente;
+        this.servico = servico;
+        this.horario = horario;
     }
 }
