@@ -18,6 +18,6 @@ public class AgendamentoValidations implements WorkDateValidations{
         if(!clientExists) throw new AgendamentoException("Id do cliente não encontrado.");
 
         var serviceExists = servicoRepository.existsById(agendamentoDTO.servico_id());
-        if(!serviceExists) throw new AgendamentoException("Id do serviço não encontrado.");
+        if(!serviceExists) throw new AgendamentoException("Id do serviço não encontrado");
     }
 }

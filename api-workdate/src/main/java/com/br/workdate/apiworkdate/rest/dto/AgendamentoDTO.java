@@ -10,9 +10,9 @@ import java.sql.Timestamp;
 public record AgendamentoDTO(
         @JsonIgnore
         Long id,
-        @NotNull
+        @NotNull(message = "{message-01}")
         Long cliente_id,
-        @NotNull
+        @NotNull(message = "{message-02}")
         Long servico_id,
         @NotNull
         @Future
