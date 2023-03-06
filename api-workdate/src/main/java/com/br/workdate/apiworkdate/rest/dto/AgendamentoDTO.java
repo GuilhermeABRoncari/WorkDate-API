@@ -14,8 +14,8 @@ public record AgendamentoDTO(
         Long cliente_id,
         @NotNull(message = "{message-02}")
         Long servico_id,
-        @NotNull
-        @Future
+        @NotNull(message = "{message-03}")
+        @Future(message = "{message-04}")
         Timestamp horario,
         String observacoes
         ) {

@@ -24,6 +24,7 @@ public class AgendamentoController {
     private AgendamentoRepository agendamentoRepository;
     @Autowired
     private AgendamentoService agendamentoService;
+    private static final String AGENDAMENTO_ERROR = "Agendamento não encontrado.";
 
     @PostMapping
     @Transactional
@@ -41,7 +42,7 @@ public class AgendamentoController {
     @ResponseStatus(HttpStatus.OK)
     public Agendamento findAgendamento(@PathVariable Long id) {
         return agendamentoRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Agendamento não encontrado."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, AGENDAMENTO_ERROR));
     }
 
     @DeleteMapping("/{id}")

@@ -34,7 +34,7 @@ public class Cliente {
     }
 
     @Bean
-    public void att(UpdateClientesDTO data) {
+    public void update(UpdateClientesDTO data) {
         if (data.nome() != null) this.nome = data.nome();
         if (data.endereco() != null) this.endereco = data.endereco();
         if (data.fone() != null) this.fone = data.fone();

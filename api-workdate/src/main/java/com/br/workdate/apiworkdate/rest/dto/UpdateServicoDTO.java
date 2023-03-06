@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public record UpdateServicoDTO(
-        @NotNull
+        @NotNull(message = "{message-09}")
         BigDecimal valor
 ) {
     public UpdateServicoDTO(Servico servico){

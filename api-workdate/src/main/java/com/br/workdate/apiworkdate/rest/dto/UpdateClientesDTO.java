@@ -4,7 +4,6 @@ import com.br.workdate.apiworkdate.domain.entity.Cliente;
 import jakarta.validation.constraints.NotBlank;
 
 public record UpdateClientesDTO(
-        @NotBlank
         String nome,
         String endereco,
         String fone) {

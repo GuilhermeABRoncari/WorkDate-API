@@ -21,6 +21,8 @@ import org.springframework.web.server.ResponseStatusException;
 public class ServicoController {
     @Autowired
     private ServicoRepository servicoRepository;
+    private static final String SERVICE_NOT_FOUND = "Servico não encontrado";
+    private static final String AGENDAMENTO_EXCEPTION = "Serviço não pode ser excluído pois está em uso em um agendamento.";
 
     @PostMapping
     @Transactional
@@ -46,7 +48,7 @@ public class ServicoController {
             servico.update(updateServicoDTO);
             servicoRepository.save(servico);
             return servico;
-        }).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Servico não encontrado"));
+        }).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, SERVICE_NOT_FOUND));
     }
 
     @DeleteMapping("/{id}")
@@ -55,16 +57,16 @@ public class ServicoController {
     public void deleteServico(@PathVariable Long id) {
         servicoRepository.findById(id).map(servico -> {
             if(servico.isAgendado()){
-                throw new AgendamentoException("Serviço não pode ser excluído pois está em uso em um agendamento.");
+                throw new AgendamentoException(AGENDAMENTO_EXCEPTION);
             }
             servicoRepository.delete(servico);
             return servico;
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Serviço não encontrado."));
+        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, SERVICE_NOT_FOUND));
     }
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Servico findServico(@PathVariable Long id){
         return servicoRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Servico não encontrado."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, SERVICE_NOT_FOUND));
     }
 }

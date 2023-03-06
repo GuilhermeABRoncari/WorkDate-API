@@ -8,9 +8,9 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public record ServicoDTO(
-        @NotBlank
+        @NotBlank(message = "{message-07}")
         String descricao,
-        @NotNull
+        @NotNull(message = "{message-08}")
         @JsonFormat(shape = JsonFormat.Shape.STRING)
         BigDecimal valor) {
         public ServicoDTO(Servico servico){

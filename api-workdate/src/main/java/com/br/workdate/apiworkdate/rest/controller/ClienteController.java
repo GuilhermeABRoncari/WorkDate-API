@@ -21,6 +21,8 @@ import org.springframework.web.server.ResponseStatusException;
 public class ClienteController {
     @Autowired
     private ClienteRepository clienteRepository;
+    private static final String CLIENT_NOT_FOUND = "Cliente não encontrado.";
+    private static final String AGENDAMENTO_EXCEPTION = "Cliente não pode ser excluído pois está em um agendamento.";
 
     @PostMapping
     @Transactional
@@ -41,10 +43,10 @@ public class ClienteController {
     public void updateCliente(@PathVariable Long id, @RequestBody @Valid UpdateClientesDTO updateClientesDTO) {
         clienteRepository.findById(id).map(clienteAtual -> {
             var cliente = clienteRepository.getReferenceById(id);
-            cliente.att(updateClientesDTO);
+            cliente.update(updateClientesDTO);
             clienteRepository.save(cliente);
             return cliente;
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado."));
+        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, CLIENT_NOT_FOUND));
     }
 
     @DeleteMapping("/{id}")
@@ -53,18 +55,18 @@ public class ClienteController {
     public void deleteCliente(@PathVariable Long id) {
         clienteRepository.findById(id).map(cliente -> {
             if (cliente.isAgendado()) {
-                throw new AgendamentoException("Cliente não pode ser excluído pois está em um agendamento.");
+                throw new AgendamentoException(AGENDAMENTO_EXCEPTION);
             }
             clienteRepository.delete(cliente);
             return cliente;
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado."));
+        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, CLIENT_NOT_FOUND));
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Cliente findCliente(@PathVariable Long id) {
         return clienteRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, CLIENT_NOT_FOUND));
     }
 }
-//fazer as mensagens fixas
+

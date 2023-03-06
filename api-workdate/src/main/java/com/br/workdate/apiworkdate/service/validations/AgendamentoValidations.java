@@ -13,11 +13,13 @@ public class AgendamentoValidations implements WorkDateValidations{
     private ClienteRepository clienteRepository;
     @Autowired
     private ServicoRepository servicoRepository;
+    private static final String ID_CLIENT = "Id do cliente não encontrado.";
+    private static final String ID_SERVICE = "Id do serviço não encontrado.";
     public void isValid(AgendamentoDTO agendamentoDTO){
         var clientExists = clienteRepository.existsById(agendamentoDTO.cliente_id());
-        if(!clientExists) throw new AgendamentoException("Id do cliente não encontrado.");
+        if(!clientExists) throw new AgendamentoException(ID_CLIENT);
 
         var serviceExists = servicoRepository.existsById(agendamentoDTO.servico_id());
-        if(!serviceExists) throw new AgendamentoException("Id do serviço não encontrado");
+        if(!serviceExists) throw new AgendamentoException(ID_SERVICE);
     }
 }
