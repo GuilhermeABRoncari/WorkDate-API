@@ -32,13 +32,11 @@ public class Agendamento {
     public void concluir(){
         this.concluido = true;
     }
-    public void cancelar(){
-        this.cancelado = true;
-    }
 
-    public void update(Cliente cliente, Servico servico, Timestamp horario) {
+    public void update(Cliente cliente, Servico servico, Timestamp horario, String observacoes) {
         this.cliente = cliente;
         this.servico = servico;
         this.horario = horario;
+        this.observacoes = observacoes;
     }
 }

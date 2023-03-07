@@ -60,8 +60,8 @@ public class AgendamentoController {
 
     @PatchMapping
     @Transactional
-    public void updateAgendamento(@RequestBody @Valid AgendamentoDTO AgendamentoDTO) {
-        agendamentoService.update(AgendamentoDTO);
+    public AgendamentoResponse updateAgendamento(@RequestBody @Valid AgendamentoDTO AgendamentoDTO) {
+        return agendamentoService.update(AgendamentoDTO);
     }
 
     @GetMapping("/concluido")

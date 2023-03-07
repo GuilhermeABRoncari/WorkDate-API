@@ -74,7 +74,7 @@ public class AgendamentoService {
         }
     }
 
-    public void update(AgendamentoDTO agendamentoDTO) {
+    public AgendamentoResponse update(AgendamentoDTO agendamentoDTO) {
         if (agendamentoRepository.existsById(agendamentoDTO.id())) {
 
             workDateValidations.isValid(agendamentoDTO);
@@ -82,7 +82,9 @@ public class AgendamentoService {
             var agendamento = agendamentoRepository.getReferenceById(agendamentoDTO.id());
             var cliente = clienteRepository.getReferenceById(agendamentoDTO.cliente_id());
             var servico = servicoRepository.getReferenceById(agendamentoDTO.servico_id());
-            agendamento.update(cliente, servico, agendamentoDTO.horario());
+            agendamento.update(cliente, servico, agendamentoDTO.horario(), agendamentoDTO.observacoes());
+            agendamento.setCancelado(agendamentoDTO.cancelado());
+            return new AgendamentoResponse(agendamento);
         } else throw new AgendamentoException(AGENDAMENTO_NOT_EXISTS);
     }
 }
