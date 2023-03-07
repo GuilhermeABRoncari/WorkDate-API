@@ -28,6 +28,9 @@ public class AgendamentoService {
     private LancamentoFinanceiroRepository lancamentoFinanceiroRepository;
     @Autowired
     private WorkDateValidations workDateValidations;
+    private static  final String NOT_ALOWED = "Horario escolhido já está agendado.";
+    private static  final String AGENDAMENTO_NOT_FOUND = "Agendamento não encontrado.";
+    private static  final String AGENDAMENTO_NOT_EXISTS = "Agendamento não existe.";
 
     public AgendamentoResponse save(AgendamentoDTO agendamentoDTO) {
         if (!agendamentoRepository.existsByHorario(agendamentoDTO.horario())) {
@@ -43,7 +46,7 @@ public class AgendamentoService {
             lancamentoFinanceiroRepository.save(new LancamentoFinanceiro(null, agendamento, Situation.OPEN));
 
             return new AgendamentoResponse(agendamento);
-        } else throw new AgendamentoException("Horario escolhido já está agendado.");
+        } else throw new AgendamentoException(NOT_ALOWED);
     }
 
     public void delete(Long id) {
@@ -56,7 +59,7 @@ public class AgendamentoService {
 
             agendamentoRepository.delete(agendamento);
             return agendamento;
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Agendamento não encontrado."));
+        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, AGENDAMENTO_NOT_FOUND));
     }
 
     public void concluir(Long id) {
@@ -80,6 +83,6 @@ public class AgendamentoService {
             var cliente = clienteRepository.getReferenceById(agendamentoDTO.cliente_id());
             var servico = servicoRepository.getReferenceById(agendamentoDTO.servico_id());
             agendamento.update(cliente, servico, agendamentoDTO.horario());
-        } else throw new AgendamentoException("Agendamento não existe.");
+        } else throw new AgendamentoException(AGENDAMENTO_NOT_EXISTS);
     }
 }

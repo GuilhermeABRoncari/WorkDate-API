@@ -23,4 +23,9 @@ public class ErrorTreatment {
             this(error.getField(), error.getDefaultMessage());
         }
     }
+    @ExceptionHandler(AgendamentoException.class)
+    private ResponseEntity agendamentoException(AgendamentoException ex){
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
 }
+

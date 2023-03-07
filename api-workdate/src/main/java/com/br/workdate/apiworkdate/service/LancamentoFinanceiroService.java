@@ -30,19 +30,15 @@ public class LancamentoFinanceiroService {
         List<LancamentoFinanceiro> lfPaid = lancamentoFinanceiroRepository.findAllBySituation(Situation.PAID);
 
         var somaOpen = lfOpen.stream().map(lancamentoFinanceiro -> lancamentoFinanceiro.getAgendamento().getServico().getValor()).collect(Collectors.toList());
-        final BigDecimal[] open = new BigDecimal[1];
-        open[0] = new BigDecimal(0);
+        final BigDecimal[] open = {new BigDecimal(0)};
         somaOpen.forEach(bigDecimal -> open[0] = bigDecimal.add(open[0]));
 
         var somaPaid = lfPaid.stream().map(lancamentoFinanceiro -> lancamentoFinanceiro.getAgendamento().getServico().getValor()).collect(Collectors.toList());
-        final BigDecimal[] paid = new BigDecimal[1];
-        paid[0] = new BigDecimal(0);
+        final BigDecimal[] paid = {new BigDecimal(0)};
         somaPaid.forEach(bigDecimal -> paid[0] = bigDecimal.add(paid[0]));
 
-        BigDecimal totalOpen = open[0];
-        BigDecimal totalPaid = paid[0];
-        BigDecimal total = totalOpen.add(totalPaid);
+        BigDecimal total = open[0].add(paid[0]);
 
-        return new ResumoDTO(totalOpen, totalPaid, total);
+        return new ResumoDTO(open[0], paid[0], total);
     }
 }
