@@ -1,18 +1,15 @@
 package com.br.workdate.apiworkdate.service;
 
-import com.br.workdate.apiworkdate.domain.entity.LancamentoFinanceiro;
+import com.br.workdate.apiworkdate.domain.Situation;
 import com.br.workdate.apiworkdate.domain.repository.AgendamentoRepository;
 import com.br.workdate.apiworkdate.domain.repository.ClienteRepository;
 import com.br.workdate.apiworkdate.domain.repository.LancamentoFinanceiroRepository;
 import com.br.workdate.apiworkdate.domain.repository.ServicoRepository;
-import com.br.workdate.apiworkdate.domain.Situation;
 import com.br.workdate.apiworkdate.rest.dto.ResumoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class LancamentoFinanceiroService {
@@ -26,19 +23,10 @@ public class LancamentoFinanceiroService {
     private LancamentoFinanceiroRepository lancamentoFinanceiroRepository;
 
     public ResumoDTO resumir() {
-        List<LancamentoFinanceiro> lfOpen = lancamentoFinanceiroRepository.findAllBySituation(Situation.OPEN);
-        List<LancamentoFinanceiro> lfPaid = lancamentoFinanceiroRepository.findAllBySituation(Situation.PAID);
-
-        var somaOpen = lfOpen.stream().map(lancamentoFinanceiro -> lancamentoFinanceiro.getAgendamento().getServico().getValor()).collect(Collectors.toList());
-        final BigDecimal[] open = {new BigDecimal(0)};
-        somaOpen.forEach(bigDecimal -> open[0] = bigDecimal.add(open[0]));
-
-        var somaPaid = lfPaid.stream().map(lancamentoFinanceiro -> lancamentoFinanceiro.getAgendamento().getServico().getValor()).collect(Collectors.toList());
-        final BigDecimal[] paid = {new BigDecimal(0)};
-        somaPaid.forEach(bigDecimal -> paid[0] = bigDecimal.add(paid[0]));
-
-        BigDecimal total = open[0].add(paid[0]);
-
-        return new ResumoDTO(open[0], paid[0], total);
+        BigDecimal totalOpen = lancamentoFinanceiroRepository.findAllBySituation(Situation.OPEN)
+                .stream().map(lancamentoFinanceiro -> lancamentoFinanceiro.getAgendamento().getServico().getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal totalPaid = lancamentoFinanceiroRepository.findAllBySituation(Situation.PAID)
+                .stream().map(lancamentoFinanceiro -> lancamentoFinanceiro.getAgendamento().getServico().getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
+        return new ResumoDTO(totalOpen, totalPaid, totalOpen.add(totalPaid));
     }
 }
